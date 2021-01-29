@@ -1,0 +1,84 @@
+.round-slider-mobile {
+    display: none;
+}
+
+@media screen and (max-width:767px) {
+    .round-slider-mobile {
+        display: flex;
+        flex-direction: column;
+        align-self: center;
+        align-items: center;
+        position: relative;
+    }
+    .round-slider-mobile__text-wrapper {}
+    .round-slider-mobile__name {
+        font-family: Inter;
+        font-style: normal;
+        font-weight: 600;
+        font-size: 18px;
+        line-height: 24px;
+        display: flex;
+        align-items: flex-end;
+        text-align: center;
+        letter-spacing: 0.03em;
+        color: #FFFFFF;
+        animation: shadow 5s infinite ease-in-out;
+        opacity: 1;
+        visibility: visible;
+        transition: visibility 0s, opacity 1s ease-out;
+    }
+    .round-slider-mobile__name_hidden {
+        visibility: hidden;
+        opacity: 0;
+        transition: visibility 1s, opacity 0.2s ease-out;
+    }
+    .round-slider-mobile__hexagon {
+        background-image: url(../images/task1/hexagon.png);
+        background-repeat: no-repeat;
+        background-size: contain;
+        width: 286px;
+        height: 286px;
+        transition: all 1s ease-out;
+    }
+    .round-slider-mobile__tip {
+        position: absolute;
+        top: calc(50%);
+        left: calc(50% - 18px);
+        visibility: visible;
+        opacity: 1;
+        transition: visibility 0s, opacity 1s ease-out;
+        animation: shake 2s infinite ease-in-out;
+    }
+    .round-slider-mobile__tip_hidden {
+        visibility: hidden;
+        opacity: 0;
+        transition: visibility 1s, opacity 0.2s ease-out;
+    }
+}
+
+@keyframes shake {
+    from {
+        transform: rotate(15deg) translate(10px);
+        /* transform: translate(10px); */
+    }
+    50% {
+        transform: rotate(-15deg) translate(-10px);
+        /* transform: translate(-10px); */
+    }
+    to {
+        transform: rotate(15deg) translate(10px);
+        /* transform: translate(10px); */
+    }
+}
+
+@keyframes shadow {
+    from {
+        text-shadow: 0 0 10px #ffffff;
+    }
+    50% {
+        text-shadow: 0 0 30px #ffffff;
+    }
+    to {
+        text-shadow: 0 0 10px #ffffff;
+    }
+}
