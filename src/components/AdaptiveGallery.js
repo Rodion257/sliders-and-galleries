@@ -21,7 +21,6 @@ function AdaptiveGallery() {
   function handleClick(evt) {
     setIsPopupOpen(true);
     setImage(evt.target);
-    console.log(image);
   }
 
   function closePopup() {

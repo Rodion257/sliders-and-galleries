@@ -19,50 +19,53 @@ import bottomImage4 from '../images/task3/bottom-row/bottom4.png';
 import bottomImage5 from '../images/task3/bottom-row/bottom5.png';
 import bottomImage6 from '../images/task3/bottom-row/bottom6.png';
 
-
-function SliderPage() {
+function SliderPage({ onUpdate }) {
 
   const [scrollTop, setScrollTop] = React.useState(0);
   const [scrollMiddle, setScrollMiddle] = React.useState(0);
   const [scrollBottom, setScrollBottom] = React.useState(0);
+
+  const [topRowRatio, setTopRowRatio] = React.useState(0);
+  const [topRowStartPosition, setTopRowStartPosition] = React.useState(0);
+  const [topRowEndPosition, setTopRowEndPosition] = React.useState(0);
+
+  const [middleRowRatio, setMiddleRowRatio] = React.useState(0);
+  const [middleRowStartPosition, setMiddleRowStartPosition] = React.useState(0);
+  const [middleRowEndPosition, setMiddleRowEndPosition] = React.useState(0);
+
+  const [bottomRowRatio, setBottomRowRatio] = React.useState(0);
+  const [bottomRowStartPosition, setBottomRowStartPosition] = React.useState(0);
+  const [bottomRowEndPosition, setBottomRowEndPosition] = React.useState(0);
+
   const rowTopRef = React.useRef();
   const rowMiddleRef = React.useRef();
   const rowBottomRef = React.useRef();
-
-  let topRowRatio;
-  let topRowStartPosition;
-  let topRowEndPosition;
-
-  let middleRowRatio;
-  let middleRowStartPosition;
-  let middleRowEndPosition;
-
-  let bottomRowRatio;
-  let bottomRowStartPosition;
-  let bottomRowEndPosition;
-
 
   const windowHeight = document.documentElement.clientHeight;
 
   React.useEffect(() => {
     //Первый ряд
-    topRowRatio = rowTopRef.current.offsetWidth / document.documentElement.clientHeight;        //Соотношение ширины ряда с картинками к высоте экрана устройства
-    topRowStartPosition = rowTopRef.current.getBoundingClientRect().top + window.pageYOffset;   //Верхняя точка ряда по высоте
-    topRowEndPosition = rowTopRef.current.getBoundingClientRect().bottom + window.pageYOffset;  //Нижняя точка ряда по высоте
-    setScrollTop(-rowTopRef.current.offsetWidth);
+    setTopRowRatio(rowTopRef.current.offsetWidth / document.documentElement.clientHeight);        //Соотношение ширины ряда с картинками к высоте экрана устройства
+    setTopRowStartPosition(rowTopRef.current.getBoundingClientRect().top + window.pageYOffset);   //Верхняя точка ряда по высоте
+    setTopRowEndPosition(rowTopRef.current.getBoundingClientRect().bottom + window.pageYOffset);  //Нижняя точка ряда по высоте
+    setScrollTop(-topRowStartPosition * topRowRatio)
+  }, [onUpdate, topRowStartPosition, topRowRatio]);
 
+  React.useEffect(() => {
     //Второй ряд
-    middleRowRatio = rowMiddleRef.current.offsetWidth / document.documentElement.clientHeight;        //Соотношение ширины ряда с картинками к высоте экрана устройства
-    middleRowStartPosition = rowMiddleRef.current.getBoundingClientRect().top + window.pageYOffset;   //Верхняя точка ряда по высоте
-    middleRowEndPosition = rowMiddleRef.current.getBoundingClientRect().bottom + window.pageYOffset;  //Нижняя точка ряда по высоте
-    setScrollMiddle(-rowMiddleRef.current.offsetWidth);
+    setMiddleRowRatio(rowMiddleRef.current.offsetWidth / document.documentElement.clientHeight);        //Соотношение ширины ряда с картинками к высоте экрана устройства
+    setMiddleRowStartPosition(rowMiddleRef.current.getBoundingClientRect().top + window.pageYOffset);   //Верхняя точка ряда по высоте
+    setMiddleRowEndPosition(rowMiddleRef.current.getBoundingClientRect().bottom + window.pageYOffset);  //Нижняя точка ряда по высоте
+    setScrollMiddle(-middleRowStartPosition * middleRowRatio);
+  }, [onUpdate, middleRowStartPosition, middleRowRatio]);
 
+  React.useEffect(() => {
     //Третий ряд
-    bottomRowRatio = rowBottomRef.current.offsetWidth / document.documentElement.clientHeight;        //Соотношение ширины ряда с картинками к высоте экрана устройства
-    bottomRowStartPosition = rowBottomRef.current.getBoundingClientRect().top + window.pageYOffset;   //Верхняя точка ряда по высоте
-    bottomRowEndPosition = rowBottomRef.current.getBoundingClientRect().bottom + window.pageYOffset;  //Нижняя точка ряда по высоте
-    setScrollBottom(-rowBottomRef.current.offsetWidth);
-  }, []);
+    setBottomRowRatio(rowBottomRef.current.offsetWidth / document.documentElement.clientHeight);        //Соотношение ширины ряда с картинками к высоте экрана устройства
+    setBottomRowStartPosition(rowBottomRef.current.getBoundingClientRect().top + window.pageYOffset);   //Верхняя точка ряда по высоте
+    setBottomRowEndPosition(rowBottomRef.current.getBoundingClientRect().bottom + window.pageYOffset);  //Нижняя точка ряда по высоте
+    setScrollBottom(-bottomRowStartPosition * bottomRowRatio);
+  }, [onUpdate, bottomRowStartPosition, bottomRowRatio]);
 
   React.useEffect(() => {
     function handleScroll() {
@@ -85,7 +88,7 @@ function SliderPage() {
     return () => {
       window.removeEventListener('scroll', handleScroll)
     }
-  }, []);
+  }, [onUpdate, bottomRowEndPosition, bottomRowRatio, bottomRowStartPosition, middleRowEndPosition, middleRowRatio, middleRowStartPosition, topRowEndPosition, topRowRatio, topRowStartPosition, windowHeight]);
 
   return (
     <div className="slider-page">
@@ -128,7 +131,7 @@ function SliderPage() {
           <img className="slider-row__image slider-row__image_position_bottom" src={bottomImage6} alt="brand" />
         </div>
       </div>
-      
+
     </div >
   );
 }
