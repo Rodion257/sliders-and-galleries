@@ -43,29 +43,22 @@ function SliderPage({ onUpdate }) {
 
   const windowHeight = document.documentElement.clientHeight;
 
-  React.useEffect(() => {
-    //Первый ряд
+  function startSlidersPosition() {
     setTopRowRatio(rowTopRef.current.offsetWidth / document.documentElement.clientHeight);        //Соотношение ширины ряда с картинками к высоте экрана устройства
     setTopRowStartPosition(rowTopRef.current.getBoundingClientRect().top + window.pageYOffset);   //Верхняя точка ряда по высоте
     setTopRowEndPosition(rowTopRef.current.getBoundingClientRect().bottom + window.pageYOffset);  //Нижняя точка ряда по высоте
     setScrollTop(-topRowStartPosition * topRowRatio)
-  }, [onUpdate, topRowStartPosition, topRowRatio]);
 
-  React.useEffect(() => {
-    //Второй ряд
     setMiddleRowRatio(rowMiddleRef.current.offsetWidth / document.documentElement.clientHeight);        //Соотношение ширины ряда с картинками к высоте экрана устройства
     setMiddleRowStartPosition(rowMiddleRef.current.getBoundingClientRect().top + window.pageYOffset);   //Верхняя точка ряда по высоте
     setMiddleRowEndPosition(rowMiddleRef.current.getBoundingClientRect().bottom + window.pageYOffset);  //Нижняя точка ряда по высоте
     setScrollMiddle(-middleRowStartPosition * middleRowRatio);
-  }, [onUpdate, middleRowStartPosition, middleRowRatio]);
 
-  React.useEffect(() => {
-    //Третий ряд
     setBottomRowRatio(rowBottomRef.current.offsetWidth / document.documentElement.clientHeight);        //Соотношение ширины ряда с картинками к высоте экрана устройства
     setBottomRowStartPosition(rowBottomRef.current.getBoundingClientRect().top + window.pageYOffset);   //Верхняя точка ряда по высоте
     setBottomRowEndPosition(rowBottomRef.current.getBoundingClientRect().bottom + window.pageYOffset);  //Нижняя точка ряда по высоте
     setScrollBottom(-bottomRowStartPosition * bottomRowRatio);
-  }, [onUpdate, bottomRowStartPosition, bottomRowRatio]);
+  }
 
   React.useEffect(() => {
     function handleScroll() {
@@ -92,7 +85,7 @@ function SliderPage({ onUpdate }) {
 
   return (
     <div className="slider-page">
-      <img className="slider-page__title-image" src={titleImage} alt="Котик" />
+      <img className="slider-page__title-image" src={titleImage} alt="Котик" onLoad={startSlidersPosition} />
 
       <div className="slider-row">
         <p className="slider-row__count">01</p>
