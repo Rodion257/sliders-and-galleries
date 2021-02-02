@@ -8,6 +8,8 @@ function RoundSliderMobile(props) {
     const [rotateDegrees, setRotateDegrees] = React.useState(0);
     const [swiping, setSwiping] = React.useState(false);
 
+
+    //Управление свайпом
     const handlers = useSwipeable({
         onSwipedLeft: (() => {
             if (childrenNumber === 0) {

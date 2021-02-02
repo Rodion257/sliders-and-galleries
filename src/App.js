@@ -42,7 +42,7 @@ function App() {
 
       {firstApp && <RoundSlider />}
       {secondApp && <ApaptiveGallery />}
-      {thirdApp && <SliderPage onUpdate={thirdApp}/>}
+      {thirdApp && <SliderPage />}
     </div >
   );
 }

@@ -19,7 +19,7 @@ import bottomImage4 from '../images/task3/bottom-row/bottom4.png';
 import bottomImage5 from '../images/task3/bottom-row/bottom5.png';
 import bottomImage6 from '../images/task3/bottom-row/bottom6.png';
 
-function SliderPage({ onUpdate }) {
+function SliderPage() {
 
   const [scrollTop, setScrollTop] = React.useState(0);
   const [scrollMiddle, setScrollMiddle] = React.useState(0);
@@ -43,23 +43,38 @@ function SliderPage({ onUpdate }) {
 
   const windowHeight = document.documentElement.clientHeight;
 
-  function startSlidersPosition() {
+  //Стартовая позиция верхнего ряда
+  React.useEffect(() => {
     setTopRowRatio(rowTopRef.current.offsetWidth / document.documentElement.clientHeight);        //Соотношение ширины ряда с картинками к высоте экрана устройства
     setTopRowStartPosition(rowTopRef.current.getBoundingClientRect().top + window.pageYOffset);   //Верхняя точка ряда по высоте
     setTopRowEndPosition(rowTopRef.current.getBoundingClientRect().bottom + window.pageYOffset);  //Нижняя точка ряда по высоте
-    setScrollTop(-topRowStartPosition * topRowRatio)
+    if (topRowRatio !== 0) {
+      setScrollTop(-topRowStartPosition * topRowRatio)
+    }
+  }, [topRowRatio, topRowStartPosition]);
 
+  //Стартовая позиция среднего ряда
+  React.useEffect(() => {
     setMiddleRowRatio(rowMiddleRef.current.offsetWidth / document.documentElement.clientHeight);        //Соотношение ширины ряда с картинками к высоте экрана устройства
     setMiddleRowStartPosition(rowMiddleRef.current.getBoundingClientRect().top + window.pageYOffset);   //Верхняя точка ряда по высоте
     setMiddleRowEndPosition(rowMiddleRef.current.getBoundingClientRect().bottom + window.pageYOffset);  //Нижняя точка ряда по высоте
-    setScrollMiddle(-middleRowStartPosition * middleRowRatio);
+    if (middleRowRatio !== 0) {
+      setScrollMiddle(-middleRowStartPosition * middleRowRatio);
+    }
+  }, [middleRowRatio, middleRowStartPosition]);
 
+  //Стартовая позиция нижнего ряда
+  React.useEffect(() => {
     setBottomRowRatio(rowBottomRef.current.offsetWidth / document.documentElement.clientHeight);        //Соотношение ширины ряда с картинками к высоте экрана устройства
     setBottomRowStartPosition(rowBottomRef.current.getBoundingClientRect().top + window.pageYOffset);   //Верхняя точка ряда по высоте
     setBottomRowEndPosition(rowBottomRef.current.getBoundingClientRect().bottom + window.pageYOffset);  //Нижняя точка ряда по высоте
-    setScrollBottom(-bottomRowStartPosition * bottomRowRatio);
-  }
+    if (bottomRowRatio !== 0) {
+      setScrollBottom(-bottomRowStartPosition * bottomRowRatio);
+    }
+  }, [bottomRowRatio, bottomRowStartPosition])
 
+
+  //Эффекты при скролле
   React.useEffect(() => {
     function handleScroll() {
       const topScrollPosition = window.pageYOffset;                   //Верхняя точка экрана устройства при скролле
@@ -67,6 +82,7 @@ function SliderPage({ onUpdate }) {
       //Если первый ряд находится в поле видимости
       if (bottomScrollPosition >= topRowStartPosition && topScrollPosition <= topRowEndPosition) {
         setScrollTop((topScrollPosition - topRowStartPosition) * topRowRatio)
+
       }
       //Если второй ряд находится в поле видимости
       if (bottomScrollPosition >= middleRowStartPosition && topScrollPosition <= middleRowEndPosition) {
@@ -81,11 +97,11 @@ function SliderPage({ onUpdate }) {
     return () => {
       window.removeEventListener('scroll', handleScroll)
     }
-  }, [onUpdate, bottomRowEndPosition, bottomRowRatio, bottomRowStartPosition, middleRowEndPosition, middleRowRatio, middleRowStartPosition, topRowEndPosition, topRowRatio, topRowStartPosition, windowHeight]);
+  }, [bottomRowEndPosition, bottomRowRatio, bottomRowStartPosition, middleRowEndPosition, middleRowRatio, middleRowStartPosition, topRowEndPosition, topRowRatio, topRowStartPosition, windowHeight]);
 
   return (
     <div className="slider-page">
-      <img className="slider-page__title-image" src={titleImage} alt="Котик" onLoad={startSlidersPosition} />
+      <img className="slider-page__title-image" src={titleImage} alt="Котик" />
 
       <div className="slider-row">
         <p className="slider-row__count">01</p>

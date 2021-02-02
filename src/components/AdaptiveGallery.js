@@ -18,15 +18,18 @@ function AdaptiveGallery() {
   const [image, setImage] = React.useState({});
   const [isPopupOpen, setIsPopupOpen] = React.useState(false);
 
+  //Открытие попапа
   function handleClick(evt) {
     setIsPopupOpen(true);
     setImage(evt.target);
   }
 
+  //Закрытие попапа по кнопке
   function closePopup() {
     setIsPopupOpen(false);
   }
 
+  //Закрытие попапа по клику мимо попапа
   React.useEffect(() => {
     function handleClickClose(evt) {
       if (evt.target.classList.contains('popup')) {
@@ -39,6 +42,7 @@ function AdaptiveGallery() {
     }
   }, [])
 
+  //Закрытие попапа по Esacpe
   React.useEffect(() => {
     function handleESCclose(evt) {
       if (evt.key === "Escape") {
